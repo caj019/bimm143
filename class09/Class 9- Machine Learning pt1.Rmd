@@ -172,17 +172,36 @@ plot(x, col=col)
 x <- read.csv('UK_foods.csv', row.names = 1)
 x
 ```
+Q1. How many rows and columns are in your new data frame named x? What R functions could you use to answer this questions?
+```{r}
+dim(x)
+```
+There are 17 rows and 4 columns. We can use `dim` to answer this question.
+Q2. Which approach to solving the ‘row-names problem’ mentioned above do you prefer and why? Is one approach more robust than another under certain circumstances?
+A: I prefer the second method (the method I used) since it's faster and less typing.
 
-
+###Spotting major differences and trends
 Lets make some plots to explore our data a bit more
 ```{r}
+barplot(as.matrix(x), beside = T, col = rainbow(nrow(x)))
+```
+Q3: Changing what optional argument in the above barplot() function results in the following plot?
+A: Changing beside = F gives the barplot below
+```{r}
 barplot(as.matrix(x), beside = F, col = rainbow(nrow(x)))
+```
+Q4 is non-existant
+Q5: Generating all pairwise plots may help somewhat. Can you make sense of the following code and resulting figure? What does it mean if a given point lies on the diagonal for a given plot?
+
+```{r}
 pairs(x, col= rainbow(10), pch =16)
-#this makes a matrix of scatterplots comparing the data for different countries. For example, the scatterplot to the right of England and above Wales is comparing their consumption of different foods, with Wales on the x-axis and England on the y-axis. The next graph over to the right is comparing England and Scotland, with Scotland on the x-axis and England on the y-axis.
 ?pairs
 ```
+A: `pairs` makes a matrix of scatterplots comparing the data for different countries. For example, the scatterplot to the right of England and above Wales is comparing their consumption of different foods, with Wales on the x-axis and England on the y-axis. The next graph over to the right is comparing England and Scotland, with Scotland on the x-axis and England on the y-axis.
 
-Principal Component Analysis (PCA) with the `prcomp()` function
+Q6. What is the main differences between N. Ireland and the other countries of the UK in terms of this data-set?
+A: The number of fresh potatoes they consume per year
+### Principal Component Analysis (PCA) with the `prcomp()` function
 ```{r}
 # Use the prcomp() PCA function 
 pca <- prcomp( t(x) )
@@ -196,10 +215,60 @@ What is in my result object `pca`? I can check the attributes!
 attributes(pca)
 ```
 
+Q7. Complete the code below to generate a plot of PC1 vs PC2. The second line adds text labels over the data points.
+Q8. Customize your plot so that the colors of the country names match the colors in our UK and Ireland map and table at start of this document.
 ```{r}
 plot(pca$x[,1], pca$x[,2], xlab = 'PC1', ylab = 'PC2', xlim=c(-270,500))
 text(pca$x[,1], pca$x[,2], colnames(x), col = c('grey', 'red', 'blue', 'green'))
 ```
+We can use the square of pca$sdev to calculate how much variation in the original data each PC accounts for
+```{r}
+v <- round( pca$sdev^2/sum(pca$sdev^2) * 100 )
+v
+```
+Or we can use `summary`
+```{r}
+z <- summary(pca)
+z$importance
+```
+We can summarize the information in a plot of variance(eigenvectors) with respect to the principal component number (eigenvector  number)
+```{r}
+barplot(v, xlab="Principal Component", ylab="Percent Variation")
+```
+
+###Digging Deeper (variable loadings)
+We can also consider the influence of each of the original variables upon the principal components (typically known as loading scores). This information can be obtained from the prcomp() returned $rotation component. It can also be summarized with a call to biplot().
+```{r}
+## Lets focus on PC1 as it accounts for > 90% of variance 
+par(mar=c(10, 3, 0.35, 0))
+barplot( pca$rotation[,1], las=2 )
+
+```
+Here we see observations (foods) with the largest positive loading scores that effectively “push” N. Ireland to right positive side of the plot (including Fresh_potatoes and Soft_drinks).
+We can also see the observations/foods with high negative scores that push the other countries to the left side of the plot (including Fresh_fruit and Alcoholic_drinks).
+Q9: Generate a similar ‘loadings plot’ for PC2. What two food groups feature prominantely and what does PC2 maninly tell us about?
+```{r}
+par(mar=c(10, 3, 0.35, 0))
+barplot( pca$rotation[,2], las=2 )
+
+```
+A: If I did this correctly, the food groups most prominently featured are fresh potatoes and soft drinks again. 
+
+###Biplots
+Another way to see this information together with the main PCA plot is in a so-called biplot:
+```{r}
+## The inbuilt biplot() can be useful for small datasets 
+biplot(pca)
+
+```
+
+##PCA of RNA-seq data
+I don't think we were given the data to do this part
+```{r}
+rna.data <- read.csv("data/expression.csv", row.names=1)
+head(rna.data)
+```
+
 
 kmeans(x, centers = , nstart =)
 hclust(dist(x))
