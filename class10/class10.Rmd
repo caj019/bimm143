@@ -192,8 +192,25 @@ table(wisc.hclust.clusters, diagnosis)
 Q12. Can you find a better cluster vs diagnoses match with by cutting into a different number of clusters between 2 and 10?
 A: 9 and 10 seem to be good?
 
+##4. OPTIONAL: K-means clustering
+Create a k-means model on wisc.data, assigning the result to wisc.km.
+Use the table() function to compare the cluster membership of the k-means model (wisc.km$cluster) to the actual diagnoses contained in the diagnosis vector.
+```{r}
+wisc.km <- kmeans(wisc.data, centers= 2, nstart= 20)
+table(wisc.km$cluster)
+table(diagnosis)
+table(wisc.km$cluster, diagnosis)
+```
+Q13. How well does k-means separate the two diagnoses? How does it compare to your hclust results?
+It seems to be a bit too specific? It didn't give enough malignant dianosis. It seems less accurate than the hclust results.
+Use the table() function to compare the cluster membership of the k-means model (wisc.km$cluster) to your hierarchical clustering model from above (wisc.hclust.clusters).
+```{r}
+table(wisc.km$cluster, wisc.hclust.clusters)
+```
+Looking at the second table you generated, it looks like clusters 1, 2, and 4 from the hierarchical clustering model can be interpreted as the cluster 1 equivalent from the k-means algorithm, and cluster 3 can be interpreted as the cluster 2 equivalent.
+
 ##5. Combining methods
-###Cluster on PCA results *NOT DONE
+###Cluster on PCA results *DONE EXCEPT FOR OPTIONAL 3D FIGURE
 
 First lets see if we can cluster the original data
 ```{r}
