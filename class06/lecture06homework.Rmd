@@ -1,0 +1,31 @@
+---
+title: "Lecture 6 Homework"
+author: "Caitlin Johnson"
+date: "1/23/2020"
+output:
+  html_document: default
+  pdf_document: default
+  word_document: default
+---
+The input to the function **protein_activity_plot** is the four letter PDB identifier for online file access in the form of a string.
+The function generates a line plot from a four letter PDB identifier. To use the function, simply input the PDB code. 
+Ex: improved ('A3F4').
+The output of the function is a line plot.
+
+```{r}
+library(bio3d)
+protein_activity_plot <- function(PDB) {
+  protein <- read.pdb(PDB)
+  protein.chainA <- trim.pdb(protein, chain="A", elety="CA")
+  protein.b <- protein.chainA$atom$b
+  plotb3(protein.b, sse = protein.chainA, typ="l", ylab="Bfactor")
+}
+```
+
+```{r}
+protein_activity_plot('4AKE') # kinase with drug
+protein_activity_plot('1AKE') # kinase no drug
+protein_activity_plot('1E4Y') # kinase with drug
+```
+
+
