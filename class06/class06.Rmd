@@ -2,7 +2,7 @@
 title: 'Class 6: R Functions'
 author: "Caitlin Johnson"
 date: "1/23/2020"
-output:
+output: 
   html_document: default
   word_document: default
 ---
