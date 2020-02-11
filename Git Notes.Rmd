@@ -1,0 +1,30 @@
+---
+title: "Git Notes"
+author: "Caitlin Johnson"
+date: "2/11/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+The steps to "transport" your data from here onto git to be able to track changes are
+1. Stage what you want to update
+2. Commit
+3. Push to Git
+
+###Important Git Commands
+I think you run these in either the console or terminal?
+`git status`
+- report on a content change
+`git add <filename>`
+- stage/track a file
+`git commit -m "message"`
+- snapshot
+`git log`
+- review your commit history
+`git diff <commit.ID> <commit.ID>`
+- Inspect content differences
+`git checkout <commit.ID>`
+- Navigate through the commit history
