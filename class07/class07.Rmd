@@ -1,0 +1,141 @@
+---
+title: "class07"
+author: "Caitlin Johnson"
+date: "1/28/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+#Functions
+EVERYTHING BELOW IS AN ABSOLUTE MESS 
+
+
+```{r}
+rescale <- function(x, na.rm=TRUE, plot=FALSE, ...) {
+  # Our rescale function from the end of lecture 6
+  if(na.rm) {
+    rng <-range(x, na.rm=TRUE)
+  } else {
+    rng <-range(x)
+  }
+
+  answer <- (x - rng[1]) / (rng[2] - rng[1])
+  if(plot) { 
+    plot(answer, ...) 
+  }
+  
+  return(answer)
+}
+```
+```{r}
+function(x, na.rm=TRUE, plot=FALSE, ...) {
+  # Our rescale function from lecture 10
+
+  if( !is.numeric(x) ) {
+    stop("Input x should be numeric", call.=FALSE)
+  }
+  
+  rng <-range(x, na.rm=TRUE)
+
+  answer <- (x - rng[1]) / (rng[2] - rng[1])
+  if(plot) { 
+    plot(answer, ...) 
+  }
+
+  return(answer)
+}
+```
+```{r}
+x <- c( 1, 2, NA, 3, NA)
+y <- c(NA, 3, NA, 3, 4)
+z <- c(1, 1)
+```
+```{r}
+is_both_na <- function(x, z) {
+  if (length(x) != length(z)){
+    stop('your inputs aren\'t the same length')
+  }
+  is.na(x) & is.na(z)
+}
+is_both_na (x, z)
+```
+```{r}
+rescale_new <- function(x, y) {
+  ## Print some info on where NA's are as well as the number of them 
+  if(length(x) != length(y)) {
+    stop("Input x and y should be vectors of the same length", call.=FALSE)
+  }
+  na.in.both <- ( is.na(x) & is.na(y) )
+  na.number  <- sum(na.in.both)
+  na.which   <- which(na.in.both)
+
+  message("Found ", na.number, " NA's at position(s):", 
+          paste(na.which, collapse=", ") ) 
+  
+  return( list(number=na.number, which=na.which) )
+}
+
+```
+
+```{r}
+x <- df1$IDs
+y <- df2$IDs
+
+intersect(x,y)
+
+x %in% y
+x[x %in% y]
+y %in% x
+gene_intersect <- function(x, y) {
+  cbind(x[x %in% y], y[y%in%x])
+}
+
+gene_intersect(x, y)
+
+
+gene_intersect2 <- function(df1, df2) {
+  cbind(df1[df1$IDs %in% df2$IDs,], 
+        df2[df2$IDs %in% df1$IDs,], 'exp')
+}
+
+gene_intersect3 <- function(df1, df2, gene_colname = 'IDs') {
+  cbind(df1[df1$IDs %in% df2$IDs, ], 
+        df2[df2$IDs %in% df1$IDs, ], 'exp')
+}
+
+colnames(df1) <- c('IDs', 'exp')
+
+
+gene_intersect4 <- function(df1, df2, gene.colname="IDs") { 
+
+  df1.name <- df1[,gene.colname]
+  df2.name <- df2[,gene.colname]
+
+  df1.inds <- df1.name %in% df2.name
+  df2.inds <- df2.name %in% df1.name
+
+   cbind( df1[ df1.inds, ], 
+          exp2=df2[ df2.inds, "exp"] )
+}
+
+gene_intersect2(df1, df2)
+gene_intersect3(df1, df2)
+gene_intersect4(df1, df2)
+```
+
+```{r}
+# student 1
+c(100, 100, 100, 100, 100, 100, 100, 90)
+# student 2
+c(100, NA, 90, 90, 90, 90, 97, 80)
+  
+
+```
+
+  
+
+```{r}
+ggplot(iris, aes(Sepal.Length, fill = Species)) + gewom_bar(stat = 'count', alpha = 0.7)
+```
