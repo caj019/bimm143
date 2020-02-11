@@ -149,7 +149,7 @@ axis(2, at=pve, labels=round(pve,2)*100 )
 Optional: There are quite a few CRAN packages that are helpful for PCA. This includes the factoextra package. Feel free to explore this package. For example:
 ```{r}
 ## ggplot based graph
-install.packages("factoextra")
+#install.packages("factoextra")
 library(factoextra)
 fviz_eig(wisc.pr, addlabels = TRUE)
 ```
@@ -239,7 +239,7 @@ plot(wisc.pr$x[,1:2], col=g)
 ```
 
 
-```{r}
+```{r eval=F}
 #Not working
 install.packages('rgl')
 library(rgl)
