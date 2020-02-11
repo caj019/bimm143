@@ -2,7 +2,7 @@
 title: "Class 9: Machine Learning pt1"
 author: "Caitlin Johnson"
 date: "2/4/2020"
-output: html_document
+output: github_document
 ---
 
 ```{r setup, include=FALSE}
