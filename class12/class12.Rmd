@@ -1,0 +1,27 @@
+---
+title: 'Class 12: Structural Bioinformatics Part 1'
+author: "Caitlin Johnson"
+date: "2/13/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+##PDB statistics
+Here we are going to inspect the types of structures in the main database for 3D biomolecular data - the PDB.
+Q1: Determine the percentage of structures solved by X-Ray and Electron Microscopy. Also can
+you determine what proportion of structures are protein? 
+```{r}
+#read in file
+stats <- read.csv('Data Export Summary.csv', row.names = 1)
+stats
+#calculate percentage values for each 'method'
+ans <- stats$Total/sum(stats$Total) *100
+names(ans) <- rownames(stats)
+round(ans, 2)
+```
+```{r}
+round(sum(stats$Proteins)/sum(stats$Total) * 100, 2)
+```
+
