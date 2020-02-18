@@ -31,6 +31,7 @@ Select Protein Only
 prot <- atom.select(hiv, "protein", value = T)
 
 write.pdb(prot, file = '1hsg_protein.pdb')
+prot
 ```
 Select and write out ligand only file
 ```{r}
