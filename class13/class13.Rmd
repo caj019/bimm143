@@ -41,5 +41,17 @@ write.pdb(lig, file = '1hsg_ligand.pdb')
 ```{r}
 lig
 ```
+Q2: Can you locate the binidng site visually? Note that crystal structures normally lack hydrogen atoms, why?
+A: Yes, I can visually see the binding site. Crystal structures normally lack hydrogen atoms because there are so many of them they would get in the way of the visualization
+Q3**: Look at the charges. Does it make sense (e.g. based on your knowledge of the
+physiochemical properties of amino acids)?
+A: I don't think I have a text editor, so I couldn't answer this question
+
+Read Docking Results
+```{r}
+res <- read.pdb ("all.pdbqt", multi = TRUE)
+write.pdb (res, "results.pdb")
+```
+
 
 
