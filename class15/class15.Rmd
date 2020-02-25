@@ -8,18 +8,78 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
+#### Section 1: Identify genetic variants of interest
 Q1: What are those 4 candidate SNPs?
 [HINT, you will may want to check the first few links of search result] 
 A: rs12936231, rs8067378, rs9303277, and rs7216389 
 Q2: What three genes do these variants overlap or effect?
 [HINT, you can find the information from the ENSEMBLE page as shown in the image
 below with red rectangles]
-ZPBP2, GSDMB, and ORMDL3
+A: ZPBP2, GSDMB, and ORMDL3
+Q3: Q3: What is the location of rs8067378 and what are the different alleles for rs8067378?
+[HINT, alleles and location are listed at the top of the the Ensemble page. You may
+search in a genome browser to find this information] 
+A: Chromosome 17:39895095; A/G
+Q4: What are the downstream genes for rs8067378? Any genes named ZPBP2,
+GSDMB, and ORMDL3? 
+A: The downstream genes aren't specified? 
+Q5: What proportion of the Mexican Ancestry in Los Angeles sample population (MXL)
+are homozygous for the asthma associated SNP (G|G)?
+[HINT: You can download a CVS file for this population from ENSEMBLE and use the R
+functions read.csv(), and table() to answer this question]
+```{r}
+mex <- read.csv('373531-SampleGenotypes-Homo_sapiens_Variation_Sample_rs8067378.csv')
+mex
+sum(mex$Genotype..forward.strand. == 'G|G')/length(mex$Genotype..forward.strand.)
 
-## Analyze RNA-seq by genotype results 
+```
+A: about 14% are homozygous for the asthma associated SNP
+Q6. Back on the ENSEMBLE page, search for the particular sample HG00109. This is a
+male from the GBR population group. What is the genotype for this sample?
+A: G|G
+#### Section 2: Initial RNA-seq analysis**CAN'T DO SINCE GALAXY WON'T LOAD
+Q7: How many sequences are there in the first file?
+What is the file size and format of the data? Make sure
+the format is fastqsanger here!
+[HINT, you can check the fastq format wiki for more
+information] 
+A: 3,863 sequences
+Q8: Does the first sequence have good quality?
+[HINT, what is the quality score for each nucleotide? You can use the R functions
+gtools::asc() together with the seqinr::s2c() to return the values corresponding to the
+specified ASCII codes.
+asc( s2c("DDDDCDEDCDDDDBBDDDCC@") )
+A: 
+Q9: What is the GC content and sequence length of the second fastq file?
+[HINT, you may check “Basic Statistics”] 
+A: 
+Q10: How about per base sequence quality? Does any base have a mean quality score
+below 20?
+[HINT, blue line is the mean quality score and for this exercise, assume a median quality
+score of below 20 to be unusable. Given this criterion, is trimming needed for the
+dataset?] 
+A: 
+####Section 3: Mapping RNA-Seq reads to genome **CAN'T DO SINCE GALAXY WON'T LOAD
+Q11: Where are most the accepted hits located?
+[HINT, you can view the SAM version of your
+accepted hits file in galaxy and also use the
+UCSC Genome Browser via following the
+galaxy provided link and focusing on particular
+regions as described above] 
+A: 
+Q12: Following Q13, is there any interesting gene around that area?
+[HINT, you can find genes around accepted hits in either the UCSC Genome Browser or
+IGV - depending on which browser you prefer] 
+A: 
+Q13: Cufflinks again produces multiple output files that you can inspect from your righthand-side galaxy history. From the “gene expression” output, what is the FPKM for the
+ORMDL3 gene? What are the other genes with above zero FPKM values? 
+A: 
 
-Here we read the rssults of RNA-Seq for about 230 samples (people) with different genotypes for the rs8067378 Asthma associated SNP.
+#### Section 4: Analyze RNA-seq by genotype results 
+
+Q14: Read this file into R and determine the sample size for each genotype and their
+corresponding median expression levels for each of these genotypes.
+A. Here we read the rssults of RNA-Seq for about 230 samples (people) with different genotypes for the rs8067378 Asthma associated SNP.
 
 ```{r}
 expr <- read.table('ExpressedGenotypeResults.txt')
@@ -41,9 +101,13 @@ Get the mean, median, etc of the expression of the G/G rows
 inds2 <- expr$geno == 'G/G'
 summary(expr[inds2, ]$exp)
 ```
+Q15: Generate a boxplot with a box per genotype, what could you infer from the relative
+expression value between A/A and G/G displayed in this plot? Does the SNP effect the
+expression of ORMDL3?
+A: 
 Boxplot of expression of our gene of interest in individuals with different genotypes
 ```{r}
 boxplot(exp ~ geno, data = expr, notch = T)
 # if the notches don't overlap, that's a sign of possible statistical significance, but you should still do statistical tests. 
 ```
-
+Yes, the SNPs affect the expression of ORMDL3
