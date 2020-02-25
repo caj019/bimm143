@@ -1,0 +1,49 @@
+---
+title: 'Class 15: Intro to Bioinformatics'
+author: "Caitlin Johnson"
+date: "2/25/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Q1: What are those 4 candidate SNPs?
+[HINT, you will may want to check the first few links of search result] 
+A: rs12936231, rs8067378, rs9303277, and rs7216389 
+Q2: What three genes do these variants overlap or effect?
+[HINT, you can find the information from the ENSEMBLE page as shown in the image
+below with red rectangles]
+ZPBP2, GSDMB, and ORMDL3
+
+## Analyze RNA-seq by genotype results 
+
+Here we read the rssults of RNA-Seq for about 230 samples (people) with different genotypes for the rs8067378 Asthma associated SNP.
+
+```{r}
+expr <- read.table('ExpressedGenotypeResults.txt')
+head(expr)
+```
+
+Extract the A/A rows 
+```{r}
+inds <- expr$geno == 'A/A'
+```
+Get the mean, median, etc of the expression of the A/A rows
+```{r}
+expr[inds, ]$exp
+summary(expr[inds, ]$exp)
+```
+
+Get the mean, median, etc of the expression of the G/G rows
+```{r}
+inds2 <- expr$geno == 'G/G'
+summary(expr[inds2, ]$exp)
+```
+Boxplot of expression of our gene of interest in individuals with different genotypes
+```{r}
+boxplot(exp ~ geno, data = expr, notch = T)
+# if the notches don't overlap, that's a sign of possible statistical significance, but you should still do statistical tests. 
+```
+
