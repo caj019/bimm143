@@ -12,8 +12,8 @@ This is my classwork from [BIMM-143](https://bioboot.github.io/bimm143_W20/) win
 - Class 10:[Unsupervised Learning Mini-Project](https://github.com/caj019/bimm143/tree/master/class10)
 - Class 11:
 - Class 12:[Structural Bioinformatics](https://github.com/caj019/bimm143/tree/master/class012)
-- Class 13: 
-- Class 14:
+- Class 13:[Bioinformatics in Drug Discoery and Design](https://github.com/caj019/bimm143/tree/master/class013)
+- Class 14:[Genome Informatics and High Throughput Sequencing](https://github.com/caj019/bimm143/tree/master/class014)
 - Class 15:
 - Class 16:
 - Class 17:
