@@ -3,8 +3,8 @@
 
 This is my classwork from [BIMM-143](https://bioboot.github.io/bimm143_W20/) winter quarter 2020 at UC San Diego.
 
-## Content
-- Class 05:
+## Index of Material
+- Class 05: Data Exploration and Visualization in R
 - Class 06:
 - Class 07:
 - Class 08:
